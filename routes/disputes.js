@@ -11,8 +11,8 @@ const bcrypt = require('bcrypt');
 const transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS
+    user: "resolvdemo@gmail.com",
+    pass: "fknopjfjtqmoeojr"
   }
 });
 
@@ -20,7 +20,7 @@ const transporter = nodemailer.createTransport({
 router.post('/', auth, authorize('individual', 'organization'), async (req, res) => {
   try {
     const dispute = new Dispute({
-      ...req.body,
+      ...req.body,  
       petitionerId: req.user._id,
       status: 'pending'
     });
@@ -108,7 +108,7 @@ router.post('/mediator-create', auth, authorize('mediator'), async (req, res) =>
           <p>Temporary login credentials:</p>
           <p>Email: ${respondentEmail}</p>
           <p>Password: ${tempPassword}</p>
-          <p>Please login and update your profile information.</p>
+          <p>Please login and update your profile information at https://resolv.com .</p>
         `
       };
 

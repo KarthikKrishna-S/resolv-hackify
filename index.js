@@ -9,11 +9,12 @@ const port = process.env.PORT || 3000;
 // Middleware for parsing JSON bodies
 app.use(express.json());
 
-// MongoDB connection
 mongoose.connect('mongodb://localhost:27017/dispute-resolution', {
   useNewUrlParser: true,
   useUnifiedTopology: true
-});
+})
+.then(() => console.log('MongoDB connected successfully'))
+.catch(error => console.error('Error connecting to MongoDB:', error));
 
 // Multer configuration for file uploads
 const storage = multer.diskStorage({
