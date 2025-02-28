@@ -61,4 +61,32 @@ router.post('/login', async (req, res) => {
   }
 });
 
+// Google authentication callback
+router.post('/google-auth', async (req, res) => {
+  try {
+    const { email, googleId, name, profilePicture, role } = req.body;
+
+    // Find or create user
+    let user = await User.findOne({ googleId });
+    
+    if (!user) {
+      user = new User({
+        email,
+        googleId,
+        name,
+        profilePicture,
+        role
+      });
+      await user.save();
+    }
+
+    // Generate JWT token
+    const token = jwt.sign({ googleId: user.googleId }, 'your_jwt_secret');
+    
+    res.json({ user, token });
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+});
+
 module.exports = router; 
